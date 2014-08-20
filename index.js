@@ -11,12 +11,12 @@
 
     var escapeString = function(str) {
         return str
-            .replace(/\b/g, '\\b')
-            .replace(/\t/g, '\\t')
-            .replace(/\n/g, '\\n')
-            .replace(/\f/g, '\\f')
-            .replace(/\r/g, '\\r')
-            .replace(/\"/g, '\\"');
+            .replace(new RegExp('\b', 'g'), '\\b')
+            .replace(new RegExp('\t', 'g'), '\\t')
+            .replace(new RegExp('\n', 'g'), '\\n')
+            .replace(new RegExp('\f', 'g'), '\\f')
+            .replace(new RegExp('\r', 'g'), '\\r')
+            .replace(new RegExp('\"', 'g'), '\\"');
     };
 
     var isSimpleType = function(value){
