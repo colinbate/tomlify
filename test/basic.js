@@ -60,7 +60,7 @@ console.log(t(simple));
 console.log('--- /SIMPLE ---');
 
 console.log('--- NESTED ---');
-console.log(t(nested));
+console.log(t(nested, {indent: true}));
 console.log('--- /NESTED ---');
 
 console.log('--- ARRAY OF OBJECTS ---');
@@ -69,4 +69,4 @@ console.log('--- /ARRAY OF OBJECTS ---');
 
 console.log('--- FRUIT ---');
 console.log(t(fruit));
-console.log('--- /Fruit ---');
+console.log('--- /FRUIT ---');
