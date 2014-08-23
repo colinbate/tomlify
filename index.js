@@ -9,7 +9,23 @@
 }(this, function () {
     'use strict';
 
-    var escapeString = function(str) {
+    var pad = function (num) {
+        if (num < 10) {
+            return '0' + num;
+        }
+        return num.toString();
+    };
+
+    var isoDateString = function (date) {
+        return date.getUTCFullYear() + '-' +
+                pad(date.getUTCMonth() + 1) + '-' +
+                pad(date.getUTCDate()) + 'T' +
+                pad(date.getUTCHours()) + ':' +
+                pad(date.getUTCMinutes()) + ':' +
+                pad(date.getUTCSeconds()) + 'Z';
+    };
+
+    var escapeString = function (str) {
         return str
             .replace(new RegExp('\b', 'g'), '\\b')
             .replace(new RegExp('\t', 'g'), '\\t')
@@ -19,17 +35,17 @@
             .replace(new RegExp('\"', 'g'), '\\"');
     };
 
-    var isSimpleType = function(value){
+    var isSimpleType = function (value){
         var type = typeof value;
         var strType = Object.prototype.toString.call(value);
         return type === 'string' || type === 'number' || type === 'boolean' || strType === '[object Date]' || strType === '[object Array]';
     };
 
-    var dumpObject = function(value, context) {
+    var dumpObject = function (value, context) {
         context = context || [];
         var type = Object.prototype.toString.call(value);
         if(type === '[object Date]') {
-            return value.toISOString();
+            return isoDateString(value);
         } else if(type === '[object Array]' ) {
             if(value.length === 0) {
                 return null;
@@ -67,7 +83,7 @@
         return result;
     };
 
-    var dump = function(value, context) {
+    var dump = function (value, context) {
         switch (typeof value) {
             case 'string':
                 return '"' + escapeString(value) + '"';
