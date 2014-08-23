@@ -9,6 +9,15 @@
 }(this, function () {
     'use strict';
 
+    var indent = '  ';
+    var getIndent = function (levels) {
+        var ret = '';
+        while (levels-- > 0) {
+            ret += indent;
+        }
+        return ret;
+    };
+
     var pad = function (num) {
         if (num < 10) {
             return '0' + num;
@@ -35,47 +44,67 @@
             .replace(new RegExp('\"', 'g'), '\\"');
     };
 
-    var isSimpleType = function (value){
+    var isArray = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
+    var isSimpleType = function (value) {
         var type = typeof value;
         var strType = Object.prototype.toString.call(value);
-        return type === 'string' || type === 'number' || type === 'boolean' || strType === '[object Date]' || strType === '[object Array]';
+        return type === 'string' || type === 'number' || type === 'boolean' || strType === '[object Date]' ||
+                (isArray(value) && (value.length === 0 || isSimpleType(value[0])));
     };
 
-    var dumpObject = function (value, context) {
+    var dumpObject = function (value, context, inArray) {
+        var contextName, bracket;
         context = context || [];
         var type = Object.prototype.toString.call(value);
-        if(type === '[object Date]') {
+        if (type === '[object Date]') {
             return isoDateString(value);
-        } else if(type === '[object Array]' ) {
-            if(value.length === 0) {
+        } else if (type === '[object Array]' ) {
+            if (value.length === 0) {
                 return null;
             }
-            var bracket = '[';
+            contextName = '';
+            bracket = '';
+            if (context.length === 0) {
+                bracket = '[';
+            }
             for (var index = 0; index < value.length; ++index) {
-               bracket += dump(value[index]) + ', ';
+                bracket += dump(value[index], context, true);
+                if (context.length === 0 ) {
+                    bracket += ', ';
+                }
+            }
+            if (context.length > 0) {
+                return bracket;
             }
             return bracket.substring(0, bracket.length - 2) + ']';
         }
 
-        var result = '', simleProps = '';
-        var propertyName;
+        var result = '', simpleProps = '';
+        var propertyName, pret = '', postt = '';
 
-        for(propertyName in value) {
-            if(isSimpleType(value[propertyName])){
-                simleProps += propertyName + ' = ' + dump(value[propertyName]) + '\n';
+        for (propertyName in value) {
+            if (isSimpleType(value[propertyName])) {
+                simpleProps += getIndent(context.length - 1) + propertyName + ' = ' + dump(value[propertyName]) + '\n';
             }
         }
 
-        if(simleProps){
-            if(context.length > 0){
-               var contextName = context.join('.');
-               result += '[' + contextName + ']\n';
+        if (simpleProps) {
+            if (context.length > 0) {
+                contextName = context.join('.');
+                if (inArray) {
+                    pret = '[';
+                    postt = ']';
+                }
+                result += getIndent(context.length - 1) + pret + '[' + contextName + ']' + postt + '\n';
             }
-            result += simleProps + '\n';
+            result += simpleProps; // + '\n';
         }
 
-        for(propertyName in value) {
-            if(!isSimpleType(value[propertyName])){
+        for (propertyName in value) {
+            if (!isSimpleType(value[propertyName])) {
                 result += dump(value[propertyName], context.concat(propertyName));
             }
         }
@@ -83,7 +112,7 @@
         return result;
     };
 
-    var dump = function (value, context) {
+    var dump = function (value, context, inArray) {
         switch (typeof value) {
             case 'string':
                 return '"' + escapeString(value) + '"';
@@ -92,7 +121,7 @@
             case 'boolean':
                 return value ? 'true' : 'false';
             case 'object':
-                return dumpObject(value, context);
+                return dumpObject(value, context, inArray);
         }
     };
 
