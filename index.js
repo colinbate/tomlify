@@ -150,7 +150,17 @@
         };
 
         this.tomlify = function (obj) {
-            return dump(obj);
+            var toml = '';
+            if (this.opts.delims) {
+                toml += this.opts.delims + '\n';
+            }
+            toml += dump(obj);
+            if (this.opts.delims) {
+                toml += this.opts.delims;
+            } else {
+                toml = toml.substring(0, toml.length - 1)
+            }
+            return toml;
         };
 
     };

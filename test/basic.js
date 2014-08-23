@@ -56,7 +56,7 @@ var fruit = {
 };
 
 console.log('--- SIMPLE ---');
-console.log(t(simple));
+console.log(t(simple, {delims: true}));
 console.log('--- /SIMPLE ---');
 
 console.log('--- NESTED ---');
