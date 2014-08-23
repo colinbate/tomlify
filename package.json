@@ -16,5 +16,9 @@
     "convert"
   ],
   "author": "Colin Bate <colin@colinbate.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0"
+  }
 }
