@@ -27,9 +27,9 @@ var nested = {
 
 var arrayOfObjects = {
   people: [
-    {name: 'Colin', age: 32},
-    {name: 'Lynne', age: 31},
-    {name: 'Noah', age: 1}
+    {name: 'Colin', month: 5},
+    {name: 'Lynne', month: 9},
+    {name: 'Noah', month: 1}
   ]
 };
 
