@@ -1,6 +1,6 @@
 # TOMLify
 
-Like `JSON.stringify()`, this library will let you generate TOML based on a JavaScript object.
+Like `JSON.stringify()`, this library will let you generate TOML based on a JavaScript object. Can generate TOML v0.2.0 with no dependencies.
 
 ## Usage
 
