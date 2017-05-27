@@ -1,8 +1,9 @@
 {
   "name": "tomlify",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Converts JS objects to TOML.",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "test": "node test/basic.js"
   },
