@@ -16,7 +16,7 @@
     "json",
     "convert"
   ],
-  "files": ["index.js"],
+  "files": ["index.js", "index.d.ts"],
   "author": "Colin Bate <colin@colinbate.com>",
   "license": "MIT",
   "devDependencies": {
