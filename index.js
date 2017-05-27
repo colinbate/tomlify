@@ -87,7 +87,7 @@
                 return isoDateString(value);
             } else if (type === '[object Array]' ) {
                 if (value.length === 0) {
-                    return null;
+                    return '[]';
                 }
                 contextName = '';
                 bracket = '';

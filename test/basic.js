@@ -7,7 +7,8 @@ var simple = {
   drinks: false,
   GPA: 4.06,
   birthday: new Date(1982, 4, 9, 13, 18, 0),
-  family: ['Lynne', 'Noah']
+  family: ['Lynne', 'Noah'],
+  empty: []
 };
 
 var nested = {
